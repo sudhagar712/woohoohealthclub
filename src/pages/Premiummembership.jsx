@@ -3,6 +3,7 @@ import SuccessStories from '../Components/SuccessStories';
 import Membership from '../Components/Membership';
 import { Link } from 'react-router-dom';
 import tt from '../assets/t.webp'
+import { Activity, Dumbbell, Users, Snowflake, Lock, ShowerHead, Car, Wifi, Droplet, Zap, Music, HeartPulse } from 'lucide-react';
 
 const Premiummembership = () => {
   const membershipRef = useRef(null);
@@ -10,6 +11,28 @@ const Premiummembership = () => {
   const scrollToMembership = () => {
     membershipRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const differences = [
+    { icon: Activity, title: "9,000 SQ FT", desc: "Dedicated training space built for flow, not chaos." },
+    { icon: Dumbbell, title: "WORLD-CLASS BRANDS", desc: "Panatta, Nautilus, Booty Builder, RealLeader USA, Nike, Shua" },
+    { icon: Users, title: "EXPERT COACHES", desc: "Certified trainers who build progress, not just guide workouts." },
+    { icon: Snowflake, title: "CLIMATE CONTROLLED", desc: "Centralized AC for peak performance comfort." },
+    { icon: Lock, title: "PREMIUM LOCKERS", desc: "Secure, spacious, and keyless RFID lockers." },
+    { icon: ShowerHead, title: "LUXURY SHOWERS", desc: "Private Showers" },
+    { icon: Car, title: "VALET PARKING", desc: "Hassle-free parking for all members." },
+    { icon: Wifi, title: "FREE WI-FI", desc: "High-speed internet throughout the floor." },
+    { icon: Droplet, title: "SAUNA & STEAM", desc: "Detox, relax, and recover after your session." },
+    { icon: Zap, title: "BIO-HACK RECOVERY", desc: "Ice Baths & Red Light Therapy for elite recovery." },
+    { icon: Music, title: "LIVE DJ SETS", desc: "Electric atmosphere with curated gym playlists." },
+  ];
+
+  const offers = [
+    { icon: Dumbbell, title: "STRENGTH TRAINING", desc: "6,000 sq ft of elite strength equipment" },
+    { icon: Zap, title: "FUNCTIONAL TRAINING", desc: "Dedicated functional training area" },
+    { icon: HeartPulse, title: "RECOVERY", desc: "Recovery zone with stretching & elite tools" },
+    { icon: Users, title: "PERSONAL TRAINING", desc: "1-on-1 sessions with expert trainers" },
+    { icon: Users, title: "GROUP ENERGY", desc: "Community-driven workout sessions" },
+  ];
 
   const zones = [
     { title: "BOOTY STATION", img: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600&q=80" },
@@ -63,6 +86,67 @@ const Premiummembership = () => {
           >
             BOOK YOUR FREE GYM TOUR
           </button>
+        </div>
+      </section>
+
+      {/* =========================================
+          WHY CHOOSE US SECTION
+          ========================================= */}
+      <section className="w-full bg-[#050505] py-24 md:py-32 px-4 md:px-8 border-b border-[#1a1a1a]">
+        <div className="max-w-[1200px] mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16 md:mb-24">
+            <h4 className="text-[#a3ff00] font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3">WHY CHOOSE US</h4>
+            <h2 className="text-5xl md:text-6xl lg:text-[80px] font-black text-white leading-none uppercase drop-shadow-lg" style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif' }}>
+              THE WOOHOO <span className="text-[#a3ff00]">DIFFERENCE</span>
+            </h2>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12 md:gap-y-16">
+            {differences.map((item, index) => (
+              <div key={index} className="flex flex-col items-center text-center group">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl border bg-[#1d2309] border-[#333] flex items-center justify-center mb-5 md:mb-6 group-hover:border-[#a3ff00] group-hover:shadow-[0_0_15px_rgba(163,255,0,0.15)] transition-all duration-300">
+                  <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#a3ff00]" />
+                </div>
+                <h3 className="text-white font-black text-lg md:text-xl uppercase tracking-wider mb-2" style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif' }}>{item.title}</h3>
+                <p className="text-gray-400 text-[10px] md:text-xs leading-relaxed max-w-[200px]">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================
+          WHAT WE OFFER SECTION
+          ========================================= */}
+      <section className="w-full bg-black py-24 md:py-32 px-4 md:px-8">
+        <div className="max-w-[1200px] mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16 md:mb-20 flex flex-col items-center">
+            <h4 className="text-[#a3ff00] font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3">OUR SERVICES</h4>
+            <h2 className="text-5xl md:text-6xl lg:text-[80px] font-black text-white leading-none uppercase drop-shadow-lg mb-8" style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif' }}>
+              WHAT WE <span className="text-[#a3ff00]">OFFER</span>
+            </h2>
+            <button 
+              onClick={scrollToMembership}
+              className="bg-[#a3ff00] text-black font-black uppercase tracking-widest px-8 md:px-10 py-3 rounded-md hover:bg-[#8ee000] transition-all duration-300 hover:scale-105 shadow-[0_0_15px_rgba(163,255,0,0.3)] text-xs md:text-sm" 
+              style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif' }}
+            >
+              BOOK YOUR FREE GYM TOUR
+            </button>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {offers.map((item, index) => (
+              <div key={index} className="bg-[#0a0a0a] border border-[#1a1a1a] rounded-xl p-8 hover:border-[#333] transition-colors duration-300 group">
+                <item.icon className="w-5 h-5 text-[#a3ff00] mb-6 group-hover:scale-110 transition-transform duration-300" />
+                <h3 className="text-white font-black text-xl md:text-2xl uppercase tracking-wider mb-2" style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif' }}>{item.title}</h3>
+                <p className="text-gray-400 text-xs md:text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

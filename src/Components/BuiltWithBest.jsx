@@ -68,7 +68,7 @@ const BuiltWithBest = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="w-full bg-[#030303] min-h-[60vh] md:min-h-[80vh] py-24 px-4 relative flex flex-col items-center justify-center overflow-hidden">
+    <section ref={containerRef} className="w-full bg-[#030303] min-h-[60vh] md:min-h-screen py-24 px-4 relative flex flex-col items-center justify-center overflow-hidden">
       
       {/* Premium Glow Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(163,255,0,0.06)_0%,_rgba(3,3,3,1)_60%)] z-0 pointer-events-none"></div>

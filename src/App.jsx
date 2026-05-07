@@ -10,6 +10,7 @@ import TrainersPage from './pages/Trainers';
 import ScrollToTop from './Components/ScrollToTop';
 import BackToTopButton from './Components/BackToTopButton';
 import Premiummembership from './pages/Premiummembership';
+import About from './pages/About';
 
 
 
@@ -25,6 +26,7 @@ const App = () => {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/membership" element={<MembershipPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/trainers" element={<TrainersPage />} />

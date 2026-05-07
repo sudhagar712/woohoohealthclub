@@ -4,6 +4,7 @@ import gsap from 'gsap';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const menuRef = useRef(null);
   const linksRef = useRef([]);
 
@@ -43,6 +44,32 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
+  // Handle scroll to hide/show navbar
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      // If menu is open, always keep the navbar visible
+      if (isOpen) {
+        setIsVisible(true);
+        return;
+      }
+      
+      const currentScrollY = window.scrollY;
+      
+      // Hide if scrolling down and past 100px. Show if scrolling up.
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
+
   const links = [
     { name: 'HOME', path: '/' },
     { name: 'ABOUT', path: '/about' },
@@ -54,7 +81,7 @@ const Navbar = () => {
   return (
     <>
       {/* Top Navbar Container */}
-      <nav className="fixed top-0 left-0 w-full z-[60] flex justify-between items-center px-6 md:px-10 py-6 bg-gradient-to-b from-black/90 to-transparent pointer-events-none">
+      <nav className={`fixed top-0 left-0 w-full z-[60] flex justify-between items-center px-6 md:px-10 py-6 bg-gradient-to-b from-black/90 to-transparent pointer-events-none transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         {/* Logo */}
         <div className="cursor-pointer group pointer-events-auto">
           <div className="border-2 border-[#a3ff00] p-1.5 flex flex-col items-center justify-center font-black text-[13px] md:text-[15px] group-hover:scale-105 transition-transform duration-300 gap-[2px] tracking-wider" style={{fontFamily: 'Impact, sans-serif'}}>
@@ -109,7 +136,7 @@ const Navbar = () => {
                   <a 
                     href={link.path}
                     onClick={closeMenu}
-                    className="text-4xl md:text-6xl font-bold tracking-[0.1em] text-white hover:text-[#a3ff00] hover:scale-110 transition-all duration-300 inline-block"
+                    className="text-2xl md:text-xl font-bold tracking-[0.1em] text-white hover:text-[#a3ff00] hover:scale-110 transition-all duration-300 inline-block"
                     style={{ fontFamily: '"Bebas Neue", sans-serif' }}
                   >
                     {link.name}
