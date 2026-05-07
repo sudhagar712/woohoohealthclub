@@ -110,6 +110,83 @@ const Membership = () => {
         </div>
 
       </div>
+
+      {/* Book Gym Tour Form */}
+      <div className="w-full max-w-3xl mt-32 bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl p-8 md:p-12 font-sans relative shadow-2xl shadow-black/50">
+        <h2 className="text-4xl md:text-5xl font-black mb-5 tracking-wide" style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif' }}>
+          <span className="text-white">BOOK YOUR </span>
+          <span className="text-[#a3ff00]">GYM TOUR</span>
+        </h2>
+        
+        <div className="flex items-start gap-3 mb-6">
+          <svg className="w-5 h-5 text-[#a3ff00] mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+          </svg>
+          <p className="text-gray-300 text-sm md:text-base leading-snug">
+            2nd and 3rd Floor, KP Landmark, 7th Main, 100Ft Road, Indiranagar, Bangalore 560008
+          </p>
+        </div>
+
+        <p className="text-gray-400 text-sm mb-8">
+          Pick a date, drop your details and come experience WooHoo in person.
+        </p>
+
+        <form className="flex flex-col gap-5">
+          <input 
+            type="text" 
+            placeholder="Your Name *" 
+            className="w-full bg-[#111] border border-[#222] text-white rounded-xl p-4 focus:outline-none focus:border-[#a3ff00] placeholder-gray-600 transition-colors"
+            required
+          />
+          
+          <input 
+            type="tel" 
+            placeholder="Phone Number (10 digits) *" 
+            className="w-full bg-[#111] border border-[#222] text-white rounded-xl p-4 focus:outline-none focus:border-[#a3ff00] placeholder-gray-600 transition-colors"
+            required
+          />
+          
+          <div className="relative">
+            <select 
+              className="w-full bg-[#111] border border-[#222] text-gray-400 rounded-xl p-4 focus:outline-none focus:border-[#a3ff00] transition-colors appearance-none"
+              required
+              defaultValue=""
+            >
+              <option value="" disabled hidden>Select Goal *</option>
+              <option value="weight_loss" className="text-white">Weight Loss</option>
+              <option value="muscle_gain" className="text-white">Muscle Gain</option>
+              <option value="endurance" className="text-white">Endurance & Fitness</option>
+              <option value="rehab" className="text-white">Rehabilitation</option>
+            </select>
+            {/* Custom chevron for select */}
+            <svg className="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-gray-500 text-[11px] font-bold ml-1 tracking-widest uppercase">
+              Pick Your Visit Date & Time * (7 AM – 7 PM)
+            </label>
+            <div className="relative">
+              {/* Added standard styling to mimic the design */}
+              <input 
+                type="datetime-local" 
+                className="w-full bg-[#111] border border-[#222] text-gray-300 rounded-xl p-4 focus:outline-none focus:border-[#a3ff00] transition-colors appearance-none color-scheme-dark [&::-webkit-calendar-picker-indicator]:opacity-50 hover:[&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                style={{ colorScheme: 'dark' }}
+                required
+              />
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            className="w-full bg-[#a3ff00] text-black font-black uppercase tracking-widest py-4 rounded-xl mt-4 hover:bg-[#8ee000] hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(163,255,0,0.2)]"
+            style={{ fontFamily: '"Bebas Neue", "Bebas Neue Fallback", sans-serif', fontSize: '1.25rem' }}
+          >
+            Book Your Free Gym Tour
+          </button>
+        </form>
+      </div>
+
     </section>
   );
 };

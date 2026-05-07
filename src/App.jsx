@@ -8,6 +8,8 @@ import MembershipPage from './pages/Membership';
 import ContactPage from './pages/Contact';
 import TrainersPage from './pages/Trainers';
 import ScrollToTop from './Components/ScrollToTop';
+import BackToTopButton from './Components/BackToTopButton';
+import Premiummembership from './pages/Premiummembership';
 
 
 
@@ -26,9 +28,12 @@ const App = () => {
             <Route path="/membership" element={<MembershipPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/trainers" element={<TrainersPage />} />
+            <Route path="/premium-plans" element={<Premiummembership   />} />
+
           </Routes>
         </main>
         <Footer />
+        <BackToTopButton />
       </BrowserRouter>
     </div>
   );
