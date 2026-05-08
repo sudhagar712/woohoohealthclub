@@ -27,12 +27,17 @@ const Preloader = ({ onComplete }) => {
       ease: 'sine.inOut'
     });
 
-    // Text subtle fade in
-    tl.from(textRef.current, {
+    // Premium 3D text character animation
+    const chars = textRef.current.querySelectorAll('.char-span');
+    tl.from(chars, {
       opacity: 0,
-      y: 10,
-      duration: 0.5,
-      ease: 'power2.out'
+      y: 40,
+      scale: 0.5,
+      rotationX: -90,
+      transformOrigin: "50% 50% -50px",
+      duration: 0.8,
+      stagger: 0.03,
+      ease: 'back.out(1.5)'
     }, 0.2);
 
     // Progress bar animating to 100% over 2.5 seconds
@@ -94,9 +99,17 @@ const Preloader = ({ onComplete }) => {
         <h2 
           ref={textRef}
           className="text-white text-2xl md:text-4xl tracking-[0.12em] md:tracking-[0.15em] font-bold text-center"
-          style={{ fontFamily: '"Bebas Neue", sans-serif' }}
+          style={{ fontFamily: '"Bebas Neue", sans-serif', perspective: '1000px' }}
         >
-          READY TO ENTER THE WOOHOO EXPERIENCE<span className="opacity-70">?</span>
+          {"READY TO ENTER THE WOOHOO EXPERIENCE?".split("").map((char, i) => (
+            <span 
+              key={i} 
+              className={`char-span inline-block ${char === '?' ? 'opacity-70' : ''}`}
+              style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+            >
+              {char}
+            </span>
+          ))}
         </h2>
       </div>
 

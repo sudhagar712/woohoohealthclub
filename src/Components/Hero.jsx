@@ -84,7 +84,7 @@ const Hero = () => {
 
                 {/* Scroll To Enter Indicator */}
                 <div ref={scrollTextRef} className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20">
-                    <span className="text-gray-500 tracking-[0.4em] text-[10px] md:text-xs font-bold uppercase">Scroll to enter</span>
+                    <span className="text-gray-500 tracking-[0.4em] text-[10px] md:text-xs font-bold uppercase">Scroll to play</span>
                     <div className="w-px h-16 bg-gradient-to-b from-[#a3ff00] to-transparent"></div>
                 </div>
 
