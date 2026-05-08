@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import v2 from "../assets/v2.mp4"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,28 +73,8 @@ const trainingZonesData = [
     ],
     buttonText: "VIEW MEMBERSHIP"
   },
-  {
-    id: 5,
-    title: "FREE WEIGHTS",
-    subtitle: "PURE STRENGTH BUILDING",
-    features: [
-      "DUMBBELL RACKS UP TO 150LBS",
-      "OLYMPIC LIFTING PLATFORMS",
-      "POWER RACKS"
-    ],
-    buttonText: "VIEW MEMBERSHIP"
-  },
-  {
-    id: 6,
-    title: "RECOVERY",
-    subtitle: "MUSCLE RESTORATION",
-    features: [
-      "MASSAGE GUN STATIONS",
-      "STRETCHING ZONES",
-      "FOAM ROLLING AREA"
-    ],
-    buttonText: "VIEW MEMBERSHIP"
-  }
+
+
 ];
 
 const ScrollVideoSection = () => {
@@ -104,124 +85,116 @@ const ScrollVideoSection = () => {
 
   useEffect(() => {
     const video = videoRef.current;
-
     if (!video) return;
 
-    const videoSegments = [0, 2, 3, 6, 8, 10, 13, 15];
+    let ctx;
 
-    const ctx = gsap.context(() => {
-      const sections = gsap.utils.toArray(".step");
+    const initAnimations = () => {
+      ctx = gsap.context(() => {
+        const sections = gsap.utils.toArray(".step");
 
-      video.pause();
-      video.currentTime = 0;
+        video.pause();
+        video.currentTime = 0;
 
-      const videoTweenTmp = gsap.fromTo(
-        video,
-        {
-          currentTime: videoSegments[0],
-        },
-        {
-          currentTime: videoSegments[sections.length],
-          duration: videoSegments[sections.length],
-          ease: "none",
-          paused: true,
-        }
-      );
+        // Automatically calculate perfect segments based on the actual video length!
+        // This ensures the moving animation works perfectly for v2.mp4 or ANY video.
+        const totalDuration = video.duration || 15; 
+        const segmentLength = totalDuration / sections.length;
 
-      const videoTween = gsap.to(videoTweenTmp, {
-        duration: 0.4,
-        ease: "power2.out",
-        paused: true,
-      });
-
-      sections.forEach((step, i) => {
-        const segmentLength =
-          videoSegments[i + 1] - videoSegments[i];
-
-        const inc =
-          segmentLength / videoSegments[sections.length];
-
-        // 1. Video scrubbing trigger
-        ScrollTrigger.create({
-          trigger: step,
-          start: i === 0 ? "top top" : "top bottom",
-          end: "bottom bottom",
-
-          onUpdate: (self) => {
-            videoTween.vars.progress =
-              videoSegments[i] /
-                videoSegments[sections.length] +
-              self.progress * inc;
-
-            videoTween.invalidate().restart();
-          },
-        });
-
-        // 2. Smooth Content Animation trigger
-        const isEven = i % 2 === 0;
-        const contentElements = step.querySelectorAll("h1, h3, li, button");
-        if (contentElements.length > 0) {
-          gsap.fromTo(
-            contentElements,
-            { 
-              opacity: 0, 
-              x: isEven ? -150 : 150, 
-              rotationY: isEven ? -25 : 25,
-              scale: 0.95
-            },
-            {
-              opacity: 1,
-              x: 0,
-              rotationY: 0,
-              scale: 1,
-              duration: 1.4,
-              stagger: 0.1,
-              ease: "expo.out",
-              scrollTrigger: {
-                trigger: step,
-                start: "top 75%",
-                toggleActions: "play reverse play reverse",
-              },
-            }
-          );
-        }
-      });
-
-      // Intro text animation
-      if (introTextRef1.current && introTextRef2.current) {
-        const chars1 = introTextRef1.current.querySelectorAll('.char-span');
-        const chars2 = introTextRef2.current.querySelectorAll('.char-span');
-        
-        const tl = gsap.timeline({
+        // 1. Premium Video Scrubbing Timeline (Perfect UI/UX)
+        const videoTl = gsap.timeline({
           scrollTrigger: {
-            trigger: introTextRef1.current,
-            start: "top 80%",
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1.5, // 1.5 seconds of buttery smooth easing
           }
         });
 
-        tl.from(chars1, {
-          y: 80,
-          opacity: 0,
-          rotationX: -90,
-          stagger: 0.03,
-          duration: 0.8,
-          ease: "back.out(1.5)",
-          transformOrigin: "50% 50% -50px"
-        })
-        .from(chars2, {
-          y: 80,
-          opacity: 0,
-          rotationX: -90,
-          stagger: 0.03,
-          duration: 0.8,
-          ease: "back.out(1.5)",
-          transformOrigin: "50% 50% -50px"
-        }, "-=0.4");
-      }
+        sections.forEach((step, i) => {
+          // Add a mathematically perfect segment to the timeline
+          videoTl.fromTo(
+            video,
+            { currentTime: i * segmentLength },
+            { currentTime: (i + 1) * segmentLength, ease: "none", duration: 1 }
+          );
 
-    }, containerRef);
+          // 2. Smooth Content Animation trigger
+          const isEven = i % 2 === 0;
+          const contentElements = step.querySelectorAll("h1, h3, li, button");
+          if (contentElements.length > 0) {
+            gsap.fromTo(
+              contentElements,
+              { 
+                opacity: 0, 
+                x: isEven ? -150 : 150, 
+                rotationY: isEven ? -25 : 25,
+                scale: 0.95
+              },
+              {
+                opacity: 1,
+                x: 0,
+                rotationY: 0,
+                scale: 1,
+                duration: 1.4,
+                stagger: 0.1,
+                ease: "expo.out",
+                scrollTrigger: {
+                  trigger: step,
+                  start: "top 75%",
+                  toggleActions: "play reverse play reverse",
+                },
+              }
+            );
+          }
+        });
 
-    return () => ctx.revert();
+        // 3. Intro text animation
+        if (introTextRef1.current && introTextRef2.current) {
+          const chars1 = introTextRef1.current.querySelectorAll('.char-span');
+          const chars2 = introTextRef2.current.querySelectorAll('.char-span');
+          
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: introTextRef1.current,
+              start: "top 80%",
+            }
+          });
+
+          tl.from(chars1, {
+            y: 80,
+            opacity: 0,
+            rotationX: -90,
+            stagger: 0.03,
+            duration: 0.8,
+            ease: "back.out(1.5)",
+            transformOrigin: "50% 50% -50px"
+          })
+          .from(chars2, {
+            y: 80,
+            opacity: 0,
+            rotationX: -90,
+            stagger: 0.03,
+            duration: 0.8,
+            ease: "back.out(1.5)",
+            transformOrigin: "50% 50% -50px"
+          }, "-=0.4");
+        }
+
+      }, containerRef);
+    };
+
+    // CRITICAL FIX: Wait for video metadata to load before initializing GSAP!
+    if (video.readyState >= 1) {
+      initAnimations();
+    } else {
+      video.addEventListener("loadedmetadata", initAnimations);
+    }
+
+    return () => {
+      if (ctx) ctx.revert();
+      video.removeEventListener("loadedmetadata", initAnimations);
+    };
   }, []);
 
   return (
@@ -239,7 +212,7 @@ const ScrollVideoSection = () => {
           preload="auto"
         >
           <source
-            src="https://svpvodps-vh.akamaized.net/special/spesial/2019/hercules-ulykken/start-1200.mp4"
+            src={v2}
             type="video/mp4"
           />
         </video>
